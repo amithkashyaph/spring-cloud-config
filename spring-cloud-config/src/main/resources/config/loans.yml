@@ -1,0 +1,11 @@
+build:
+  version: "2.0"
+
+loans:
+  message: "Welcome to EazyBank loans related to Dev APIs"
+  contactDetails:
+    name: "Amith Kashyap Dev"
+    email: "amith_dev@gmail.com"
+  onCallSupport:
+    - (1234)56789
+    - (0987)654321
