@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to EazyBank accounts related to Prod APIs"
+  contactDetails:
+    name: "Amith Kashyap Prod"
+    email: "amith_prod@gmail.com"
+  onCallSupport:
+    - (1234)56789
+    - (0987)654321
