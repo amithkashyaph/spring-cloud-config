@@ -1,0 +1,22 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: "configserver"
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/amithkashyaph/eazybytes-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+        #native: => native is used when we have to read config from classpath and local file system
+          #search-location: "classpath:/config"
+          #search-location: "file:///Users//Desktop//repos//bank-app2//config"
+encrypt:
+  key: "AMITHKASHYAPH"
