@@ -21,5 +21,26 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class AccountServiceImpl {
+public class AccountServiceImpl implements IAccountService {
+
+
+    private AccountRepository accountRepository;
+    private CustomerRepository customerRepository;
+
+    @Override
+    public void createAccount(CustomerDto customerDto) {
+
+        Optional<Customer> customerExists = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
+        if(customerExists.isPresent()) {
+            throw new CustomerAlreadyExistsException("Customer already exists with the mobile number " + customerDto.getMobileNumber());
+        }
+
+        Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        accountRepository.save(createNewAccount(savedCustomer));
+
+    }
+
 }
