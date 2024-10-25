@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+cards:
+  message: "Welcome to EazyBank cards related to Prod APIs"
+  contactDetails:
+    name: "Amith Kashyap Prod"
+    email: "amith_prod@gmail.com" #we will encrypt these values while storing it in the local system or classpath or on GitHub
+  onCallSupport:
+    - (1234)56789
+    - (0987)654321
