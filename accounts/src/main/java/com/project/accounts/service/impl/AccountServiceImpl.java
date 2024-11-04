@@ -43,4 +43,20 @@ public class AccountServiceImpl implements IAccountService {
 
     }
 
+    @Override
+    public CustomerDto fetchCustomerByMobileNumber(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+
+        Account account = accountRepository.findByCustomerId(customer.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString()));
+
+
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        customerDto.setAccountDto(AccountMapper.mapToAccountsDto(account, new AccountDto()));
+
+        return customerDto;
+    }
+
+
 }
