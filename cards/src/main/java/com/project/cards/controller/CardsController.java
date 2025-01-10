@@ -92,4 +92,27 @@ public class CardsController {
         return ResponseEntity.status(HttpStatus.OK).body(cardsDto);
     }
 
+
+    @Operation(
+            summary = "Fetch Card Details REST API",
+            description = "REST API to fetch card details based on a mobile number"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<CardsContactInfoRecord> fetchCardDetails() {
+        return ResponseEntity.status(HttpStatus.OK).body(cardsContactInfoRecord);
+    }
+
 }
