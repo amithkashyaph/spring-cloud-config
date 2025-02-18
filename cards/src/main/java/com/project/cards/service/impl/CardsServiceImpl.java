@@ -17,7 +17,20 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class CardsServiceImpl {
+public class CardsServiceImpl implements CardsService {
 
+    private CardsRepository cardsRepository;
+
+    /**
+     * @param mobileNumber - Mobile Number of the Customer
+     */
+    @Override
+    public void createCard(String mobileNumber) {
+        Optional<Cards> optionalCards= cardsRepository.findByMobileNumber(mobileNumber);
+        if(optionalCards.isPresent()){
+            throw new CardAlreadyExistsException("Card already registered with given mobileNumber "+mobileNumber);
+        }
+        cardsRepository.save(createNewCard(mobileNumber));
+    }
 
 }
