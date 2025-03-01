@@ -27,4 +27,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/account", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AccountsController {
 
+    private IAccountService accountService;
+
+    private AccountsInfoDto accountsInfoDto;
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "Up and Running";
+    }
 }
