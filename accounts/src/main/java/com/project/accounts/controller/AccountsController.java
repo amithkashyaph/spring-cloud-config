@@ -31,8 +31,24 @@ public class AccountsController {
 
     private AccountsInfoDto accountsInfoDto;
 
-    @GetMapping("/health")
-    public String healthCheck() {
-        return "Up and Running";
+    @GetMapping("/")
+    public String sayHello() {
+        return "Hello there!!!!";
+    }
+
+    @Operation(
+            summary = "Create Account REST API",
+            description = "Creates Account entity in the database"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "HTTP Status CREATED"
+    )
+    @PostMapping("/create")
+    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
+        accountService.createAccount(customerDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new ResponseDto(AccountConstants.STATUS_201, AccountConstants.MESSAGE_201));
     }
 }
