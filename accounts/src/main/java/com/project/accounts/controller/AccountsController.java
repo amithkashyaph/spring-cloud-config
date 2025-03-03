@@ -51,4 +51,18 @@ public class AccountsController {
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(AccountConstants.STATUS_201, AccountConstants.MESSAGE_201));
     }
+
+    @Operation(
+            summary = "Get Account details API",
+            description = "API to fetch Account details by mobileNumber"
+    )
+    @GetMapping("/fetch")
+    public ResponseEntity<CustomerDto> getCustomerInfoByMobileNumber(
+            @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 didgits")
+            @RequestParam("mobileNumber") String mobileNumber) {
+        CustomerDto customerDto = accountService.fetchCustomerByMobileNumber(mobileNumber);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customerDto);
+    }
 }
