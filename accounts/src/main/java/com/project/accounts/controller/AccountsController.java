@@ -65,4 +65,36 @@ public class AccountsController {
                 .status(HttpStatus.OK)
                 .body(customerDto);
     }
+
+
+    @Operation(
+            summary = "Update Account REST API",
+            description = "REST API to update the Account entity"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    })
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto) {
+        boolean isUpdated = accountService.updateAccountDetails(customerDto);
+        if(isUpdated) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(AccountConstants.STATUS_200, AccountConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDto(AccountConstants.STATUS_500, AccountConstants.MESSAGE_500));
+        }
+    }
 }
