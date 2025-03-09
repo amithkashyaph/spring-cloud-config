@@ -130,4 +130,16 @@ public class AccountsController {
                     .body(new ResponseDto(AccountConstants.STATUS_500, AccountConstants.MESSAGE_500));
         }
     }
+
+
+    @Operation(
+            summary = "Get Account Contact Info API",
+            description = "API to fetch Account contact details"
+    )
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsInfoDto> getCustomerInfoByMobileNumber() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(accountsInfoDto);
+    }
 }
