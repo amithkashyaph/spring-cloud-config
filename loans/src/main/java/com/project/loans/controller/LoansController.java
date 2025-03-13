@@ -34,4 +34,37 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Validated
 public class LoansController {
+
+    private LoansService iLoansService;
+
+    private LoansContactInfoRecord loansContactInfoRecord;
+
+    @Operation(
+            summary = "Create Loan REST API",
+            description = "REST API to create new loan inside EazyBank"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "HTTP Status CREATED"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+    @PostMapping("/create")
+    public ResponseEntity<ResponseDto> createLoan(@RequestParam
+                                                  @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
+                                                  String mobileNumber) {
+        iLoansService.createLoan(mobileNumber);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
+    }
+
 }
