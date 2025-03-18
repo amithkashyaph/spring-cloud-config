@@ -94,6 +94,7 @@ public class LoansController {
     }
 
 
+
     @Operation(
             summary = "Fetch Loan Contact info REST API",
             description = "REST API to fetch loan contact info"
@@ -117,6 +118,40 @@ public class LoansController {
         return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoRecord);
     }
 
-
+    @Operation(
+            summary = "Update Loan Details REST API",
+            description = "REST API to update loan details based on a loan number"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "417",
+                    description = "Expectation Failed"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    )
+            )
+    }
+    )
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateLoanDetails(@Valid @RequestBody LoansDto loansDto) {
+        boolean isUpdated = iLoansService.updateLoan(loansDto);
+        if(isUpdated) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
+        }else{
+            return ResponseEntity
+                    .status(HttpStatus.EXPECTATION_FAILED)
+                    .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_UPDATE));
+        }
+    }
 
 }
