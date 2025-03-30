@@ -17,4 +17,19 @@ import java.util.Random;
 @Service
 @AllArgsConstructor
 public class LoansServiceImpl implements LoansService {
+
+    private LoansRepository loansRepository;
+
+    /**
+     * @param mobileNumber - Mobile Number of the Customer
+     */
+    @Override
+    public void createLoan(String mobileNumber) {
+        Optional<Loans> optionalLoans= loansRepository.findByMobileNumber(mobileNumber);
+        if(optionalLoans.isPresent()){
+            throw new LoanAlreadyExistsException("Loan already registered with given mobileNumber "+mobileNumber);
+        }
+        loansRepository.save(createNewLoan(mobileNumber));
+    }
+
 }
