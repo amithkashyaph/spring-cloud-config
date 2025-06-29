@@ -48,4 +48,17 @@ public class LoansServiceImpl implements LoansService {
         return newLoan;
     }
 
+    /**
+     *
+     * @param mobileNumber - Input mobile Number
+     * @return Loan Details based on a given mobileNumber
+     */
+    @Override
+    public LoansDto fetchLoan(String mobileNumber) {
+        Loans loans = loansRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Loan", "mobileNumber", mobileNumber)
+        );
+        return LoansMapper.mapToLoansDto(loans, new LoansDto());
+    }
+
 }
