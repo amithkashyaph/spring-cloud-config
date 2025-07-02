@@ -75,4 +75,18 @@ public class LoansServiceImpl implements LoansService {
         return  true;
     }
 
+    /**
+     * @param mobileNumber - Input MobileNumber
+     * @return boolean indicating if the delete of loan details is successful or not
+     */
+    @Override
+    public boolean deleteLoan(String mobileNumber) {
+        Loans loans = loansRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Loan", "mobileNumber", mobileNumber)
+        );
+        loansRepository.deleteById(loans.getLoanId());
+        return true;
+    }
+
+
 }
